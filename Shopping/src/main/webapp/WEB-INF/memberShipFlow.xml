@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+ 
+	<!-- Executed when webFlow is triggered -->
+	<on-start>
+	<!-- demohandler is java class available through annotated Demohandler.java class.here we are calling it’s initFlow() method. -->
+	  <evaluate expression="demohandler.initFlow()" result="flowScope.user"/>
+	</on-start>
+ 
+	 <!-- if not specified the first view state is the starting state -->
+	<view-state id="start" view="user" model="flowScope.user">
+	   <transition on="submit" to="add"/>
+	</view-state>
+ 
+	<action-state id="add">
+		<evaluate expression="userService.saveOrUpdate(user)"></evaluate>
+		<transition on="success" to="confirmDetails" />
+	
+	</action-state>
+ 
+	<view-state id="confirmDetails" view="confirmDetails" model="flowScope.user">
+		<transition on="edit" to="start" />
+		<transition on="submit" to="welcome" />
+	</view-state>
+ 
+	<end-state id="welcome" view="home" />
+	
+	<!-- these events are available in every state-->
+	<global-transitions>
+		<transition on="home" to="toHome" />
+		<transition on="error" to="toException" />
+	</global-transitions>
+</flow>

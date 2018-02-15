@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context
+	     http://www.springframework.org/schema/context/spring-context.xsd
+	      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/Furniture" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<context:component-scan base-package="com.furniture"></context:component-scan>
+	<tx:annotation-driven></tx:annotation-driven>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.furniture.model</value>
+
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10240000" />
+	</bean>
+	
+	  <bean id="categoryService" class="com.furniture.service.CategoryService"></bean> 
+	<bean id="categoryDAO" class="com.furniture.dao.CategoryDAOImpl" ></bean>
+	<bean id="supplierDAO" class="com.furniture.dao.SupplierDAOImpl" ></bean>
+		<bean id="supplierService" class="com.furniture.service.SupplierService"></bean>
+		<bean id="sub_categoryDAO" class="com.furniture.dao.Sub_CategoryDAOImpl" ></bean>
+		<bean id="sub_categoryService" class="com.furniture.service.Sub_CategoryService"></bean>
+	<bean id="productDAO" class="com.furniture.dao.ProductDAOImpl" ></bean>
+ 		<bean id="productService" class="com.furniture.service.ProductService"></bean>
+ 		<bean id="userDAO" class="com.furniture.dao.UserDAOImpl" ></bean>
+ 		<bean id="userService" class="com.furniture.service.UserService"></bean>
+ 	  <bean id="cartItemDAO" class="com.furniture.dao.CartItemDAOImpl" ></bean>
+ 		<bean id="cartItemService" class="com.furniture.service.CartItemService"></bean>
+  		 <bean id="cartDAO" class="com.furniture.dao.CartDAOImpl" ></bean>
+ 		<bean id="cartService" class="com.furniture.service.CartService"></bean>
+ 		
+ 		<!--   <bean id="orderDetailDAO" class="com.furniture.dao.OrderDetailDAOImpl" ></bean>
+ 		<bean id="orderDetailService" class="com.furniture.service.OrderDetailService"></bean>
+ 		
+ 		 <bean id="orderedItemsDAO" class="com.furniture.dao.OrderedItemsDAOImpl" ></bean>
+ 		<bean id="orderedItemsService" class="com.furniture.service.OrderedItemsService"></bean>
+ 		
+ 		 <bean id="shippingAddressDAO" class="com.furniture.dao.ShippingAddressDAOImpl" ></bean>
+ 		<bean id="shippingAddressService" class="com.furniture.service.ShippingAddressService"></bean>
+ 		 <bean id="billingAddressDAO" class="com.furniture.dao.BillingAddressDAOImpl" ></bean>
+ 		<bean id="billingAddressService" class="com.furniture.service.BillingAddressService"></bean>
+ 		 <bean id="cardDetailDAO" class="com.furniture.dao.CardDetailDAOImpl" ></bean>
+ 		<bean id="cardDetailService" class="com.furniture.service.CardDetailService"></bean>-->
+ 		 <bean id="user" class="com.furniture.model.User"></bean>
+ 		 <bean id="product" class="com.furniture.model.Product"></bean>
+ 		 <bean id="cardDetail" class="com.furniture.model.CardDetail"></bean>
+ 		  
+ 		
+ </beans>
