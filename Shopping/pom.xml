@@ -8,6 +8,7 @@
   <name>Shopping Maven Webapp</name>
   <url>http://maven.apache.org</url>
    <!-- Changes committed in new created branch shoppingcart -->
+  <!-- Changes committed from master branch -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
